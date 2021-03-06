@@ -10,6 +10,7 @@ using namespace std;
 Timeout::Timeout(int theTime, Process *theProcess, Simulation *theSim)
     : Event(theTime, theProcess, theSim)
 {
+    remainingBurst = 0;
 }
 
 void Timeout::handleEvent()
@@ -25,10 +26,12 @@ void Timeout::handleEvent()
     if (maxTime > currBurst)
     {
         newVersion->addCPUBurst(maxTime - currBurst);
+        remainingBurst = maxTime - currBurst;
     }
     else
     {
         newVersion->addCPUBurst(currBurst - maxTime);
+        remainingBurst = currBurst - maxTime;
     }
 
     currSim->addProcessToCPU(newVersion);
@@ -42,6 +45,6 @@ void Timeout::handleEvent()
 
 void Timeout::printEvent()
 {
-    cout << "Time : " << Event::getTime() << "  Process :  " << this->getProcess()->getId()
-         << " completed Timeout ! " << endl;
+    cout << "Time : " << Event::getTime() << " Process : " << this->getProcess()->getId()
+         << " times out (needs " << remainingBurst << " units more)." << endl;
 }

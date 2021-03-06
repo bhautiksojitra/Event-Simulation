@@ -84,6 +84,11 @@ bool Simulation::isCPUEmpty()
     return cpuForSim->isEmpty();
 }
 
+bool Simulation::isIOEmpty()
+{
+    return ioForSim->isEmpty();
+}
+
 void Simulation::addEvent(Event *newEvent)
 {
     eventList->enqueue(newEvent);
@@ -119,6 +124,11 @@ void Simulation::addProcessToCPU(Process *theProcess)
     cpuForSim->enqueue(theProcess);
 }
 
+void Simulation::addProcessToIO(Process *theProcess)
+{
+    ioForSim->enqueue(theProcess);
+}
+
 Process *Simulation::removeProcessFromCPU()
 {
     return dynamic_cast<Process *>(cpuForSim->dequeue());
@@ -127,4 +137,14 @@ Process *Simulation::removeProcessFromCPU()
 Process *Simulation::getCPUFront()
 {
     return dynamic_cast<Process *>(cpuForSim->getFront());
+}
+
+Process *Simulation::removeProcessFromIO()
+{
+    return dynamic_cast<Process *>(ioForSim->dequeue());
+}
+
+Process *Simulation::getIOFront()
+{
+    return dynamic_cast<Process *>(ioForSim->getFront());
 }

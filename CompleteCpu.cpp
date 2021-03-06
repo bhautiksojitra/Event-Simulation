@@ -22,17 +22,18 @@ void CompleteCpu::handleEvent()
 
     if (theProcess->getIOBurst() != 0)
     {
+        theSim->addProcessToIO(theProcess);
         StartIO *newEvent = new StartIO(theSim->currentTime(), theProcess, theSim);
+        theSim->addEvent(newEvent);
     }
     else
     {
-        cout << "exit event should be created" << endl;
+        //start exit event
     }
 
     Process *newVersion = theSim->removeProcessFromCPU();
 
     newVersion->removeCPUBurst();
-    theSim->addProcessToCPU(newVersion);
 
     if (!theSim->isCPUEmpty())
     {
@@ -43,6 +44,6 @@ void CompleteCpu::handleEvent()
 
 void CompleteCpu::printEvent()
 {
-    cout << "Time : " << Event::getTime() << "  Process :  " << this->getProcess()->getId()
-         << " completed Cpu event ! " << endl;
+    cout << "Time : " << Event::getTime() << "  Process : " << this->getProcess()->getId()
+         << " completes CPU burst. Queueing for I/O." << endl;
 }

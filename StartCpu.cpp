@@ -10,6 +10,7 @@ using namespace std;
 StartCpu::StartCpu(int theTime, Process *theProcess, Simulation *theSim)
 	: Event(theTime, theProcess, theSim)
 {
+	isBurstEnough = false;
 }
 
 void StartCpu::handleEvent()
@@ -18,6 +19,7 @@ void StartCpu::handleEvent()
 	Simulation *theSim = this->getSimulation();
 	if ((theProcess->getCpuBurst()) <= (theSim->getMaxTimeQ()))
 	{
+		isBurstEnough = true;
 		theSim->incrementTime(theProcess->getCpuBurst());
 		CompleteCpu *newEvent = new CompleteCpu(theSim->currentTime(), theProcess, theSim);
 		this->getSimulation()->addEvent(newEvent);
@@ -33,6 +35,14 @@ void StartCpu::handleEvent()
 void StartCpu::printEvent()
 {
 	Process *currProcess = this->getProcess();
-	cout << " Time : " << this->getTime() << "Process : " << currProcess->getId()
-		 << "  has done startCpu event !" << endl;
+	if (isBurstEnough)
+	{
+		cout << "Time : " << this->getTime() << " Process : " << currProcess->getId()
+			 << "  begins CPU burst (will complete all " << currProcess->getCpuBurst() << " remaining units). " << endl;
+	}
+	else
+	{
+		cout << "Time : " << this->getTime() << " Process : " << currProcess->getId()
+			 << "  begins CPU burst (will time out; needs " << currProcess->getCpuBurst() << " units total)." << endl;
+	}
 }

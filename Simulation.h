@@ -40,6 +40,7 @@ public:
 	// you may need to add more methods
 	bool isProcessListEmpty();
 	bool isCPUEmpty();
+	bool isIOEmpty();
 
 	void addEvent(Event *);
 	void addToProcessList(Process *);
@@ -48,8 +49,11 @@ public:
 	int getMaxTimeQ();
 	void incrementTime(int);
 	void addProcessToCPU(Process *);
+	void addProcessToIO(Process *);
 	Process *removeProcessFromCPU();
 	Process *getCPUFront();
 
+	Process *removeProcessFromIO();
+	Process *getIOFront();
 
 }; // class Simulation

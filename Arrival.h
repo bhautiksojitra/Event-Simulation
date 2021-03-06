@@ -6,6 +6,9 @@ class Simulation;
 
 class Arrival : public Event
 {
+private:
+    bool statusCPU;
+
 public:
     Arrival(int, Process *, Simulation *);
     void handleEvent();

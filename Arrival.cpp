@@ -3,12 +3,14 @@
 #include "Simulation.h"
 #include "StartCpu.h"
 #include "Process.h"
+#include <string>
 
-//using namespace std;
+using namespace std;
 
 Arrival::Arrival(int theArrivalTime, Process *theProcess, Simulation *theSim)
     : Event(theArrivalTime, theProcess, theSim)
 {
+    statusCPU = false;
 }
 
 void Arrival::handleEvent()
@@ -18,6 +20,8 @@ void Arrival::handleEvent()
 
     if (currSim->isCPUEmpty())
     {
+        statusCPU = true;
+
         currSim->incrementTime(Event::getTime());
         StartCpu *newEvent = new StartCpu(currSim->currentTime(), currProcess, currSim);
 
@@ -27,12 +31,21 @@ void Arrival::handleEvent()
     else
     {
         currSim->addProcessToCPU(currProcess);
-        }
+    }
 
     sim->setArrival();
 }
 
 void Arrival::printEvent()
 {
-    cout << "Time : " << this->getTime() << " process " << this->getProcess()->getId() << " arrives in the System." << endl;
+    if (statusCPU)
+    {
+        cout << "Time : " << this->getTime() << " Process " << this->getProcess()->getId()
+             << " arrives in system: CPU is free (process begins execution)." << endl;
+    }
+    else
+    {
+        cout << "Time : " << this->getTime() << " Process " << this->getProcess()->getId()
+             << " arrives in system: CPU is busy (process will be queued)." << endl;
+    }
 }
