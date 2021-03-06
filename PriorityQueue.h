@@ -2,18 +2,23 @@
 // Forward Reference of the class.
 class Node;
 class ListItem;
+#include "Queue.h"
+class Event;
+#pragma once
 
 //Interface
 class PriorityQueue
 {
-    private:
-        PriorityNode* head; // Pointer to the top Node in the P-Queue
-        int size;
-        
-    public:
-        PriorityQueue(); // Constructor
-        void push(); // add the data in the Queue;
-        ListItem* getMax();  // to get the data with the max priority 
-        ListItem* extractMax(); // retrieve the data with the max priority and remove it.
-        int size(); // return the size of the list. 
+private:
+    Node *top;
+    int size;
+
+public:
+    PriorityQueue(); // Constructor
+
+    void enqueue(Event *); // add the data in the Queue;
+
+    ListItem *extractMax(); // retrieve the data with the max priority and remove it.
+    bool isEmpty();      // checks whether the list is empty
+    int getSize();
 };

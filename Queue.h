@@ -3,11 +3,13 @@
 class Node;
 class ListItem;
 
-class Queue {
+class Queue
+{
 private:
 	Node *front;
 	Node *back;
 	int size;
+
 public:
 	Queue();
 	int getSize();
@@ -15,4 +17,7 @@ public:
 	void enqueue(ListItem *item);
 	ListItem *getFront();
 	ListItem *dequeue();
+	ListItem *getMax();
+	ListItem *extractMax();
+	void print();
 }; // class Queue
