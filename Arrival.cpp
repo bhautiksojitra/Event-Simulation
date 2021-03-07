@@ -15,6 +15,7 @@ Arrival::Arrival(int theArrivalTime, Process *theProcess, Simulation *theSim)
 
 void Arrival::handleEvent()
 {
+   
     Process *currProcess = this->getProcess();
     Simulation *currSim = this->getSimulation();
 
@@ -23,17 +24,18 @@ void Arrival::handleEvent()
         statusCPU = true;
 
         currSim->incrementTime(Event::getTime());
+
         StartCpu *newEvent = new StartCpu(currSim->currentTime(), currProcess, currSim);
+        currSim->addEvent(newEvent);
 
         currSim->addProcessToCPU(currProcess);
-        currSim->addEvent(newEvent);
     }
     else
     {
         currSim->addProcessToCPU(currProcess);
     }
 
-    sim->setArrival();
+    currSim->setArrival();
 }
 
 void Arrival::printEvent()

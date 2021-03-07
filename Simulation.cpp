@@ -41,6 +41,7 @@ void Simulation::runSimulation(char *fileName)
 void Simulation::setArrival()
 {
 
+    
     int arrivalTime;
     int bursts;
 
@@ -48,6 +49,7 @@ void Simulation::setArrival()
 
     if (getline(fileRead, newLine))
     {
+	
         istringstream iss(newLine);
 
         iss >> arrivalTime;
@@ -71,6 +73,8 @@ void Simulation::setArrival()
 
         this->addEvent(newEvent);
         this->addToProcessList(newProcess);
+
+ cout << 1 << endl;
     }
 }
 

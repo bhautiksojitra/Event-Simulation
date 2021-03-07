@@ -12,53 +12,58 @@ PriorityQueue::PriorityQueue()
 
 void PriorityQueue::enqueue(Event *item)
 {
-    Node *temp=new Node(item, nullptr);
+    Node *temp = new Node(item, nullptr);
 
-    Node * curr;//pointer to current Node
+    Node *curr; //pointer to current Node
+    Node *previous;
 
-
-    if(top == nullptr || item->compareTo(dynamic_cast<ListItem *>(top->getItem())) == 1)
+    if (top == nullptr || item->compareTo(dynamic_cast<ListItem *>(top->getItem())) == 1)
     {
         temp->setNext(top);
-        top=temp;
+        top = temp;
     }
     else
     {
 
-        curr=top;
-        while(curr->getNext()!= nullptr && item->compareTo(dynamic_cast<ListItem *>(curr->getNext()->getItem()))==0)
+        previous = top;
+        curr = top->getNext();
+
+        while (previous->getNext() != nullptr)
         {
-
-            curr=curr->getNext();
+            if (item->compareTo(curr->getItem()) == 1)
+            {
+                previous->setNext(temp);
+                temp->setNext(curr);
+            }
+            previous = curr;
+            curr = curr->getNext();
         }
-
-       temp->setNext(curr->getNext());
-       curr->setNext(temp);
     }
     size++;
-}//end enqueue
+} //end enqueue
 
-ListItem * PriorityQueue::extractMax()
+ListItem *PriorityQueue::extractMax()
 {
-    ListItem* highestPriority = nullptr;
-    Node * theNode=top;
-    if(theNode!= nullptr)
+    ListItem *highestPriority = nullptr;
+    Node *theNode = top;
+    if (theNode != nullptr)
     {
-        highestPriority= dynamic_cast<ListItem *>(theNode->getItem());
+        highestPriority = dynamic_cast<ListItem *>(theNode->getItem());
         //special case removing the last node
-        if(top->getNext()== nullptr)
+        if (top->getNext() == nullptr)
         {
-            top= nullptr;
-        }else
+            top = nullptr;
+        }
+        else
         {
-            top=top->getNext();
+            top = top->getNext();
         }
 
-        delete(theNode);
+        delete (theNode);
         size--;
     }
     return highestPriority;
-}//dequeue
+} //dequeue
 bool PriorityQueue::isEmpty()
 {
     bool isTopNull = false;

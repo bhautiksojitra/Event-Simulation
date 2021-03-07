@@ -20,21 +20,21 @@ void CompleteCpu::handleEvent()
     Process *theProcess = this->getProcess();
     Simulation *theSim = this->getSimulation();
 
-    if (theProcess->getIOBurst() != 0)
+    theSim->removeProcessFromCPU();
+    theProcess->removeCPUBurst();
+
+    if (theSim->isIOEmpty() && theProcess->getIOBurst() != 0)
     {
-        theSim->addProcessToIO(theProcess);
         StartIO *newEvent = new StartIO(theSim->currentTime(), theProcess, theSim);
         theSim->addEvent(newEvent);
+        theSim->addProcessToIO(theProcess);
     }
-    else
+    else if (!theSim->isIOEmpty() && theProcess->getIOBurst() != 0)
     {
-        //start exit event
+        theSim->addProcessToIO(theProcess);
+        StartIO *newEvent = new StartIO(theSim->currentTime(), theSim->getIOFront(), theSim);
+        theSim->addEvent(newEvent);
     }
-
-    Process *newVersion = theSim->removeProcessFromCPU();
-
-    newVersion->removeCPUBurst();
-
     if (!theSim->isCPUEmpty())
     {
         StartCpu *newEvent = new StartCpu(theSim->currentTime(), theSim->getCPUFront(), theSim);
