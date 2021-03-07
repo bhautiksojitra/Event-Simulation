@@ -12,35 +12,30 @@ PriorityQueue::PriorityQueue()
 
 void PriorityQueue::enqueue(Event *item)
 {
-    Node *temp = new Node(item, nullptr);
+    Node *temp=new Node(item, nullptr);
 
-    Node *curr; //pointer to current Node
-    Node *previous;
+    Node * curr;//pointer to current Node
 
-    if (top == nullptr || item->compareTo(dynamic_cast<ListItem *>(top->getItem())) == 1)
+
+    if(top == nullptr || (item->compareTo(dynamic_cast<ListItem *>(top->getItem())) == 1) )
     {
         temp->setNext(top);
-        top = temp;
+        top=temp;
     }
     else
     {
 
-        previous = top;
-        curr = top->getNext();
-
-        while (previous->getNext() != nullptr)
+        curr=top;
+        while(curr->getNext()!= nullptr && (item->compareTo(dynamic_cast<ListItem *>(curr->getNext()->getItem()))==0))
         {
-            if (item->compareTo(curr->getItem()) == 1)
-            {
-                previous->setNext(temp);
-                temp->setNext(curr);
-            }
-            previous = curr;
-            curr = curr->getNext();
+
+            curr=curr->getNext();
         }
+
+       temp->setNext(curr->getNext());
+       curr->setNext(temp);
     }
-    size++;
-} //end enqueue
+    size++;} //end enqueue
 
 ListItem *PriorityQueue::extractMax()
 {

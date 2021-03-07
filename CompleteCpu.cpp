@@ -32,8 +32,7 @@ void CompleteCpu::handleEvent()
     else if (!theSim->isIOEmpty() && theProcess->getIOBurst() != 0)
     {
         theSim->addProcessToIO(theProcess);
-        StartIO *newEvent = new StartIO(theSim->currentTime(), theSim->getIOFront(), theSim);
-        theSim->addEvent(newEvent);
+        
     }
     if (!theSim->isCPUEmpty())
     {
