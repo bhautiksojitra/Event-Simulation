@@ -11,6 +11,7 @@ private:
 
 public:
     Arrival(int, Process *, Simulation *);
+    int compareTo(ListItem *);
     void handleEvent();
     void printEvent();
 };

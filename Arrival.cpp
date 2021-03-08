@@ -3,6 +3,7 @@
 #include "Simulation.h"
 #include "StartCpu.h"
 #include "Process.h"
+#include "Timeout.h"
 #include <string>
 
 using namespace std;
@@ -15,7 +16,7 @@ Arrival::Arrival(int theArrivalTime, Process *theProcess, Simulation *theSim)
 
 void Arrival::handleEvent()
 {
-   
+
     Process *currProcess = this->getProcess();
     Simulation *currSim = this->getSimulation();
 
@@ -23,9 +24,7 @@ void Arrival::handleEvent()
     {
         statusCPU = true;
 
-        currSim->incrementTime(Event::getTime());
-
-        StartCpu *newEvent = new StartCpu(currSim->currentTime(), currProcess, currSim);
+        StartCpu *newEvent = new StartCpu(this->getTime() , currProcess, currSim);
         currSim->addEvent(newEvent);
 
         currSim->addProcessToCPU(currProcess);
@@ -36,6 +35,25 @@ void Arrival::handleEvent()
     }
 
     currSim->setArrival();
+}
+
+int Arrival::compareTo(ListItem *other)
+{
+    Event *castEvent = dynamic_cast<Event *>(other);
+    int boolean = 0;
+
+    if (Timeout *temp = dynamic_cast<Timeout *>(castEvent))
+    {
+        if (this->getTime() <= castEvent->getTime())
+        {
+            boolean = 1;
+        }
+     }
+    else
+    {
+	boolean = Event::compareTo(other);
+    }
+    return boolean;
 }
 
 void Arrival::printEvent()

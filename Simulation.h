@@ -46,6 +46,7 @@ public:
 	void addToProcessList(Process *);
 	void setArrival();
 	int currentTime();
+	void setTime(int);
 	int getMaxTimeQ();
 	void incrementTime(int);
 	void addProcessToCPU(Process *);

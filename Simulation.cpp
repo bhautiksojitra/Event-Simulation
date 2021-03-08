@@ -30,10 +30,12 @@ void Simulation::runSimulation(char *fileName)
     while (!(eventList->isEmpty()))
     {
         Event *currentEvent = dynamic_cast<Event *>(eventList->extractMax());
-
+        this->setTime(currentEvent->getTime());
+        
         currentEvent->handleEvent();
         currentEvent->printEvent();
-    }
+	
+        }
 
     fileRead.close();
 }
@@ -41,7 +43,6 @@ void Simulation::runSimulation(char *fileName)
 void Simulation::setArrival()
 {
 
-    
     int arrivalTime;
     int bursts;
 
@@ -49,7 +50,7 @@ void Simulation::setArrival()
 
     if (getline(fileRead, newLine))
     {
-	
+
         istringstream iss(newLine);
 
         iss >> arrivalTime;
@@ -74,7 +75,7 @@ void Simulation::setArrival()
         this->addEvent(newEvent);
         this->addToProcessList(newProcess);
 
- cout << 1 << endl;
+        cout << 1 << endl;
     }
 }
 
@@ -111,6 +112,11 @@ void Simulation::summary()
 int Simulation::currentTime()
 {
     return currTime;
+}
+
+void Simulation::setTime(int newTime)
+{
+    currTime = newTime;
 }
 
 int Simulation::getMaxTimeQ()

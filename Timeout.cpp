@@ -10,7 +10,7 @@ using namespace std;
 Timeout::Timeout(int theTime, Process *theProcess, Simulation *theSim)
     : Event(theTime, theProcess, theSim)
 {
-    remainingBurst = 0;
+    remainingBurst = this->getProcess()->getCpuBurst() - this->getSimulation()->getMaxTimeQ();
 }
 
 void Timeout::handleEvent()
@@ -23,24 +23,36 @@ void Timeout::handleEvent()
     Process *newVersion = currSim->removeProcessFromCPU();
 
     newVersion->removeCPUBurst();
-    if (maxTime > currBurst)
-    {
-        newVersion->addCPUBurst(maxTime - currBurst);
-        remainingBurst = maxTime - currBurst;
-    }
-    else
-    {
-        newVersion->addCPUBurst(currBurst - maxTime);
-        remainingBurst = currBurst - maxTime;
-    }
+
+    newVersion->addCPUBurst(currBurst - maxTime);
 
     currSim->addProcessToCPU(newVersion);
 
     if (!currSim->isCPUEmpty())
     {
-        StartCpu *newEvent = new StartCpu(currSim->currentTime(), currSim->getCPUFront(), currSim);
+        StartCpu *newEvent = new StartCpu(this->getTime(), currSim->getCPUFront(), currSim);
         currSim->addEvent(newEvent);
     }
+}
+
+int Timeout::compareTo(ListItem *other)
+{
+    Event *castEvent = dynamic_cast<Event *>(other);
+int boolean = 0;
+
+    if (Arrival *temp = dynamic_cast<Arrival *>(castEvent))
+    {
+        if (this->getTime() >= castEvent->getTime())
+        {
+            boolean = 1;
+        }
+    }
+    else
+    {
+        boolean = Event::compareTo(other);
+    }
+
+return boolean;
 }
 
 void Timeout::printEvent()

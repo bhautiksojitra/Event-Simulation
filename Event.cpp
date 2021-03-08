@@ -1,4 +1,5 @@
 #include "Event.h"
+#include "Process.h"
 #include <iostream>
 
 using namespace std;
@@ -17,7 +18,17 @@ int Event::compareTo(ListItem *other)
 	}
 	else if (castEvent->getTime() == this->getTime())
 	{
-		return 0;
+		/*if (this->getProcess()->getId() < castEvent->getProcess()->getId())
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}*/
+	return 0;
+
+	
 	}
 	else
 	{

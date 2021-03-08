@@ -22,15 +22,15 @@ void StartCpu::handleEvent()
 
 		isBurstEnough = true;
 
-		theSim->incrementTime(theProcess->getCpuBurst());
-		CompleteCpu *newEvent = new CompleteCpu(theSim->currentTime(), theProcess, theSim);
+		int completeCpuTime = theSim->currentTime() + theProcess->getCpuBurst();
+		CompleteCpu *newEvent = new CompleteCpu(completeCpuTime , theProcess, theSim);
 		theSim->addEvent(newEvent);
 	}
 	else
 	{
 
-		theSim->incrementTime(theSim->getMaxTimeQ());
-		Timeout *newEvent = new Timeout(theSim->currentTime(), theProcess, theSim);
+		int timeOutTime = theSim->currentTime() + theSim->getMaxTimeQ();
+		Timeout *newEvent = new Timeout(timeOutTime , theProcess, theSim);
 		theSim->addEvent(newEvent);
 	}
 }

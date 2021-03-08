@@ -23,22 +23,31 @@ void CompleteIO::handleEvent()
     theSim->removeProcessFromIO();
     theProcess->removeIOBurst();
 
-    if (!theSim->isIOEmpty())
+    if(theProcess->getCpuBurst() == 0)
     {
-        StartIO *newEvent = new StartIO(theSim->currentTime(), theSim->getIOFront(), theSim);
-        theSim->addEvent(newEvent);
+	cout << " exit event should be created " << endl;
     }
+    else
+    {
+    
+    
 
     if (theSim->isCPUEmpty() && theProcess->getCpuBurst() != 0)
     {
-        StartCpu *newEvent = new StartCpu(theSim->currentTime(), theProcess, theSim);
+        StartCpu *newEvent = new StartCpu(this->getTime(), theProcess, theSim);
         theSim->addEvent(newEvent);
         theSim->addProcessToCPU(theProcess);
     }
     else if (!theSim->isCPUEmpty() && theProcess->getCpuBurst() != 0)
     {
         theSim->addProcessToCPU(theProcess);
-        
+    }
+}
+
+if (!theSim->isIOEmpty())
+    {
+        StartIO *newEvent = new StartIO(this->getTime(), theSim->getIOFront(), theSim);
+        theSim->addEvent(newEvent);
     }
 }
 

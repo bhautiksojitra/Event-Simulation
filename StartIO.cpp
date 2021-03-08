@@ -16,9 +16,9 @@ void StartIO::handleEvent()
     Process *currProcess = this->getProcess();
     Simulation *currSim = this->getSimulation();
 
-    currSim->incrementTime(currProcess->getIOBurst());
+    int completeIOTime = currSim->currentTime() + currProcess->getIOBurst();
 
-    CompleteIO *newEvent = new CompleteIO(currSim->currentTime(), currProcess, currSim);
+    CompleteIO *newEvent = new CompleteIO(completeIOTime, currProcess, currSim);
     currSim->addEvent(newEvent);
 }
 
