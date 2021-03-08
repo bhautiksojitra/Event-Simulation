@@ -1,4 +1,3 @@
-#pragma once
 #include "Arrival.h"
 #include "Simulation.h"
 #include "StartCpu.h"
@@ -24,7 +23,7 @@ void Arrival::handleEvent()
     {
         statusCPU = true;
 
-        StartCpu *newEvent = new StartCpu(this->getTime() , currProcess, currSim);
+        StartCpu *newEvent = new StartCpu(this->getTime(), currProcess, currSim);
         currSim->addEvent(newEvent);
 
         currSim->addProcessToCPU(currProcess);
@@ -48,10 +47,10 @@ int Arrival::compareTo(ListItem *other)
         {
             boolean = 1;
         }
-     }
+    }
     else
     {
-	boolean = Event::compareTo(other);
+        boolean = Event::compareTo(other);
     }
     return boolean;
 }

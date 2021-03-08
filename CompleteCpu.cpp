@@ -1,10 +1,9 @@
-#pragma once
-
 #include "CompleteCpu.h"
 #include "Process.h"
 #include "Simulation.h"
 #include "StartIO.h"
 #include "StartCpu.h"
+#include "Exit.h"
 
 #include <iostream>
 
@@ -23,27 +22,26 @@ void CompleteCpu::handleEvent()
     theSim->removeProcessFromCPU();
     theProcess->removeCPUBurst();
 
-    if(theProcess->getIOBurst() == 0)
+    if (theProcess->getIOBurst() == 0)
     {
-	cout << " exit event should be called " << endl;
-    }
-else
-{	
-    
-
-    if (theSim->isIOEmpty() && theProcess->getIOBurst() != 0)
-    {
-        StartIO *newEvent = new StartIO(this->getTime(), theProcess, theSim);
+        Exit *newEvent = new Exit(this->getTime(), theProcess, theSim);
         theSim->addEvent(newEvent);
-        theSim->addProcessToIO(theProcess);
     }
-    else if (!theSim->isIOEmpty() && theProcess->getIOBurst() != 0)
+    else if (theProcess->getIOBurst() != 0)
     {
-        theSim->addProcessToIO(theProcess);
+
+        if (theSim->isIOEmpty())
+        {
+            StartIO *newEvent = new StartIO(this->getTime(), theProcess, theSim);
+            theSim->addEvent(newEvent);
+            theSim->addProcessToIO(theProcess);
+        }
+        else if (!theSim->isIOEmpty())
+        {
+            theSim->addProcessToIO(theProcess);
+        }
     }
-    
-}
-if (!theSim->isCPUEmpty())
+    if (!theSim->isCPUEmpty())
     {
         StartCpu *newEvent = new StartCpu(this->getTime(), theSim->getCPUFront(), theSim);
         theSim->addEvent(newEvent);

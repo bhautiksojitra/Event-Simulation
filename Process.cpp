@@ -1,3 +1,4 @@
+
 #include "Process.h"
 #include "Queue.h"
 #include "Burst.h"
@@ -54,7 +55,7 @@ int Process::getCpuBurst()
         return topBurst->getIntValue();
     }
 
-    return -1;
+    return 0;
 }
 
 int Process::getIOBurst()

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Timeout.h"
 #include "Process.h"
 #include "Simulation.h"
@@ -38,13 +36,13 @@ void Timeout::handleEvent()
 int Timeout::compareTo(ListItem *other)
 {
     Event *castEvent = dynamic_cast<Event *>(other);
-int boolean = 0;
+    int boolean = 1;
 
     if (Arrival *temp = dynamic_cast<Arrival *>(castEvent))
     {
         if (this->getTime() >= castEvent->getTime())
         {
-            boolean = 1;
+            boolean = 0;
         }
     }
     else
@@ -52,7 +50,7 @@ int boolean = 0;
         boolean = Event::compareTo(other);
     }
 
-return boolean;
+    return boolean;
 }
 
 void Timeout::printEvent()

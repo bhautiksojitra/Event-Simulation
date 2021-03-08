@@ -31,11 +31,9 @@ void Simulation::runSimulation(char *fileName)
     {
         Event *currentEvent = dynamic_cast<Event *>(eventList->extractMax());
         this->setTime(currentEvent->getTime());
-        
-        currentEvent->handleEvent();
         currentEvent->printEvent();
-	
-        }
+        currentEvent->handleEvent();
+    }
 
     fileRead.close();
 }
@@ -74,8 +72,6 @@ void Simulation::setArrival()
 
         this->addEvent(newEvent);
         this->addToProcessList(newProcess);
-
-        cout << 1 << endl;
     }
 }
 

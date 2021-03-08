@@ -1,10 +1,12 @@
- 
+#pragma once
 class ListItem;
 
-class Node {
+class Node
+{
 private:
 	ListItem *item;
 	Node *next;
+
 public:
 	Node();
 	Node(ListItem *i, Node *n);

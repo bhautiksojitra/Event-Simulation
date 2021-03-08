@@ -1,3 +1,4 @@
+#pragma once
 class Queue;
 class Burst;
 #include "ListItem.h"
