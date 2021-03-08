@@ -10,7 +10,6 @@ using namespace std;
 Arrival::Arrival(int theArrivalTime, Process *theProcess, Simulation *theSim)
     : Event(theArrivalTime, theProcess, theSim)
 {
-    statusCPU = false;
 }
 
 void Arrival::handleEvent()
@@ -21,7 +20,6 @@ void Arrival::handleEvent()
 
     if (currSim->isCPUEmpty())
     {
-        statusCPU = true;
 
         StartCpu *newEvent = new StartCpu(this->getTime(), currProcess, currSim);
         currSim->addEvent(newEvent);
@@ -57,7 +55,7 @@ int Arrival::compareTo(ListItem *other)
 
 void Arrival::printEvent()
 {
-    if (statusCPU)
+    if (this->getSimulation()->isCPUEmpty())
     {
         cout << "Time : " << this->getTime() << " Process " << this->getProcess()->getId()
              << " arrives in system: CPU is free (process begins execution)." << endl;

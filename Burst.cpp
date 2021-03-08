@@ -14,10 +14,6 @@ int Burst::compareTo(ListItem *other)
     return 0;
 }
 
-void Burst::print()
-{
-    cout << valueOfburst << endl;
-}
 
 int Burst::getIntValue()
 {

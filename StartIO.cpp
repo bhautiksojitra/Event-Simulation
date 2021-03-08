@@ -26,5 +26,5 @@ void StartIO::printEvent()
 {
     Process *currProcess = this->getProcess();
     cout << "Time : " << this->getTime() << " Process : " << currProcess->getId()
-         << "  begins I/O burst of length " << currProcess->getIOBurst() << endl;
+         << " begins I/O burst of length " << currProcess->getIOBurst() << endl;
 }

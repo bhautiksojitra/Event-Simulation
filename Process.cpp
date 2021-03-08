@@ -3,17 +3,21 @@
 #include "Queue.h"
 #include "Burst.h"
 
+#include <iostream>
+
 using namespace std;
 
 Process::Process(int theArrivalTime, int theId)
 {
     arrivalTime = theArrivalTime;
+    totalBurstsTime = 0;
+    exitTime = 0;
+    waitTime = 0;
     id = theId;
     cpuQueue = new Queue();
     ioQueue = new Queue();
 }
 
-//change it
 int Process::compareTo(ListItem *other)
 {
     return 0;
@@ -22,6 +26,26 @@ int Process::compareTo(ListItem *other)
 int Process::getId()
 {
     return id;
+}
+
+int Process::getArrivalTime()
+{
+    return arrivalTime;
+}
+
+int Process::getTotalBurstsTime()
+{
+    return totalBurstsTime;
+}
+
+int Process::getExitTime()
+{
+    return exitTime;
+}
+
+int Process::getWaitTime()
+{
+    return waitTime;
 }
 
 void Process::addCPUBurst(int value)
@@ -69,3 +93,27 @@ int Process::getIOBurst()
 
     return 0;
 }
+
+void Process::setExitTime(int newTime)
+{
+    exitTime = newTime;
+}
+
+void Process::setWaitTime(int newTime)
+{
+    waitTime = newTime;
+}
+
+void Process::incrementBurstTime(int newValue)
+{
+    totalBurstsTime = totalBurstsTime + newValue;
+}
+
+void Process::print()
+{
+    
+    cout << "    " << getId() << "    "
+         << "    " << getArrivalTime() << "    "
+         << "        " << getExitTime() << "    "
+         << "        " << getWaitTime() << endl;
+} 

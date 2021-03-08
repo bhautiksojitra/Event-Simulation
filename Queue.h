@@ -17,7 +17,4 @@ public:
 	void enqueue(ListItem *item);
 	ListItem *getFront();
 	ListItem *dequeue();
-	ListItem *getMax();
-	ListItem *extractMax();
-	void print();
 }; // class Queue

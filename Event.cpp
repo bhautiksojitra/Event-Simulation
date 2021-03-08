@@ -9,11 +9,11 @@ Event::Event(int theTime, Process *theProcess, Simulation *theSim)
 	: eventTime(theTime), process(theProcess), sim(theSim) {}
 
 int Event::compareTo(ListItem *other)
-{	
+{
 	int returnValue = 0;
-	
+
 	Event *castEvent = dynamic_cast<Event *>(other);
-	if(castEvent != nullptr)
+	if (castEvent != nullptr)
 	{
 
 		if (castEvent->getTime() > this->getTime())
@@ -28,9 +28,8 @@ int Event::compareTo(ListItem *other)
 			}
 		}
 	}
-	
-	return returnValue;	
-	
+
+	return returnValue;
 }
 
 Event::Event() {}
@@ -54,3 +53,4 @@ Simulation *Event::getSimulation()
 {
 	return sim;
 }
+

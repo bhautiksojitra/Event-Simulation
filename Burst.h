@@ -11,5 +11,5 @@ public:
     int compareTo(ListItem *);
     int getIntValue();
     void setIntValue(int);
-    void print();
+    
 };

@@ -60,11 +60,13 @@ void Simulation::setArrival()
             if (bursts >= 0)
             {
                 newProcess->addCPUBurst(bursts);
+                newProcess->incrementBurstTime(bursts);
             }
             else
             {
                 bursts = -bursts;
                 newProcess->addIOBurst(bursts);
+                newProcess->incrementBurstTime(bursts);
             }
         }
 
@@ -100,9 +102,19 @@ void Simulation::addToProcessList(Process *newProcess)
     processList->enqueue(newProcess);
 }
 
-//change it
 void Simulation::summary()
 {
+    cout << " Process "
+         << " ArrivalTime "
+         << " ExitTime "
+         << " WaitTime " << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    while(!isProcessListEmpty())
+    {
+	Process* theProcess = dynamic_cast<Process*> (processList->dequeue());
+	theProcess->print();
+    }
+	
 }
 
 int Simulation::currentTime()

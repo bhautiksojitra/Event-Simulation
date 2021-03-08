@@ -51,6 +51,6 @@ void CompleteIO::handleEvent()
 
 void CompleteIO::printEvent()
 {
-    cout << "Time : " << Event::getTime() << "  Process : " << this->getProcess()->getId()
+    cout << "Time : " << Event::getTime() << " Process : " << this->getProcess()->getId()
          << " completes I/O burst. Queueing for CPU." << endl;
 }

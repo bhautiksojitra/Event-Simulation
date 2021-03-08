@@ -10,3 +10,6 @@ all: A2main.o $(objects)
 # this rule will build a .o file from a .cpp file. 
 %.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+clean:
+	rm -f $(objects)

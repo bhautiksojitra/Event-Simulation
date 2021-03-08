@@ -50,6 +50,6 @@ void CompleteCpu::handleEvent()
 
 void CompleteCpu::printEvent()
 {
-    cout << "Time : " << Event::getTime() << "  Process : " << this->getProcess()->getId()
+    cout << "Time : " << Event::getTime() << " Process : " << this->getProcess()->getId()
          << " completes CPU burst. Queueing for I/O." << endl;
 }

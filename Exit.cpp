@@ -4,6 +4,7 @@
 #include "CompleteCpu.h"
 #include "Timeout.h"
 #include <iostream>
+
 using namespace std;
 
 Exit::Exit(int theTime, Process *theProcess, Simulation *theSim)
@@ -13,11 +14,15 @@ Exit::Exit(int theTime, Process *theProcess, Simulation *theSim)
 
 void Exit::handleEvent()
 {
+    Process *theProcess = this->getProcess();
+
+    theProcess->setExitTime(this->getTime());
+    theProcess->setWaitTime((theProcess->getExitTime() - theProcess->getArrivalTime()) - theProcess->getTotalBurstsTime());
 }
 
 void Exit::printEvent()
 {
     Process *currProcess = this->getProcess();
     cout << "Time : " << this->getTime() << " Process : " << currProcess->getId()
-         << " Exited the process. " << currProcess->getIOBurst() << endl;
+         << " All the CPU and I/O Bursts are completed for the process. (Exit) " << currProcess->getIOBurst() << endl;
 }
