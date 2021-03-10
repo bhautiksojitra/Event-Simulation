@@ -24,5 +24,5 @@ void Exit::printEvent()
 {
     Process *currProcess = this->getProcess();
     cout << "Time : " << this->getTime() << " Process : " << currProcess->getId()
-         << " All the CPU and I/O Bursts are completed for the process. (Exit) " << currProcess->getIOBurst() << endl;
+         << " All the CPU and I/O Bursts are completed for the process. (Exit) "  << endl;
 }

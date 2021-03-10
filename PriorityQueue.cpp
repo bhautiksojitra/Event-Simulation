@@ -1,75 +1,35 @@
 #include <iostream>
+
 #include "ListItem.h"
 #include "Node.h"
 #include "PriorityQueue.h"
 #include "Event.h"
 
-PriorityQueue::PriorityQueue()
+PriorityQueue::PriorityQueue() : ParentQueue() {}
+
+void PriorityQueue::enqueue(ListItem *item)
 {
-    top = nullptr;
-    size = 0;
-}
+    Node *newNode = new Node(item, nullptr);
 
-void PriorityQueue::enqueue(Event *item)
-{
-    Node *temp=new Node(item, nullptr);
+    Node *curr;
 
-    Node * curr;//pointer to current Node
-
-
-    if(top == nullptr || (item->compareTo(dynamic_cast<ListItem *>(top->getItem())) == 1) )
+    if (front == nullptr || (item->compareTo(front->getItem()) == 1))
     {
-        temp->setNext(top);
-        top=temp;
+        newNode->setNext(front);
+        front = newNode;
     }
     else
     {
+        curr = front;
 
-        curr=top;
-        while(curr->getNext()!= nullptr && (item->compareTo(dynamic_cast<ListItem *>(curr->getNext()->getItem()))==0))
+        while (curr->getNext() != nullptr && (item->compareTo(curr->getNext()->getItem()) == 0))
         {
-
-            curr=curr->getNext();
+            curr = curr->getNext();
         }
 
-       temp->setNext(curr->getNext());
-       curr->setNext(temp);
+        newNode->setNext(curr->getNext());
+        curr->setNext(newNode);
     }
-    size++;} //end enqueue
 
-ListItem *PriorityQueue::extractMax()
-{
-    ListItem *highestPriority = nullptr;
-    Node *theNode = top;
-    if (theNode != nullptr)
-    {
-        highestPriority = dynamic_cast<ListItem *>(theNode->getItem());
-        //special case removing the last node
-        if (top->getNext() == nullptr)
-        {
-            top = nullptr;
-        }
-        else
-        {
-            top = top->getNext();
-        }
-
-        delete (theNode);
-        size--;
-    }
-    return highestPriority;
-} //dequeue
-bool PriorityQueue::isEmpty()
-{
-    bool isTopNull = false;
-    if (top == nullptr)
-    {
-        isTopNull = true;
-    }
-    return isTopNull;
-}
-
-int PriorityQueue::getSize()
-{
-    return size;
+    size++;
 }

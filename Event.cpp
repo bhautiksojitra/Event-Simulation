@@ -1,5 +1,7 @@
 #include "Event.h"
 #include "Process.h"
+#include "Arrival.h"
+#include "Timeout.h"
 #include <iostream>
 
 using namespace std;
@@ -22,7 +24,15 @@ int Event::compareTo(ListItem *other)
 		}
 		else if (castEvent->getTime() == this->getTime())
 		{
-			if (this->getProcess()->getId() < castEvent->getProcess()->getId())
+			if(dynamic_cast <Arrival*>(this) && dynamic_cast <Timeout*> (castEvent))
+			{
+				returnValue = 1;
+			}
+			else if(dynamic_cast<Arrival*>(castEvent) && dynamic_cast <Timeout*> (this))
+			{
+				returnValue = 0;
+			}
+			else if (this->getProcess()->getId() < castEvent->getProcess()->getId())
 			{
 				returnValue = 1;
 			}

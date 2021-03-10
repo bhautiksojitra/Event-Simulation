@@ -1,6 +1,8 @@
 #pragma once
+
 class Queue;
 class Burst;
+
 #include "ListItem.h"
 
 class Process : public ListItem
@@ -25,6 +27,7 @@ public:
     int getWaitTime();
 
     int getCpuBurst();
+    void setCpuBurst(int);
     int getIOBurst();
 
     void addCPUBurst(int);

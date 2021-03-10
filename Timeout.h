@@ -10,7 +10,6 @@ private:
 
 public:
     Timeout(int, Process *, Simulation *);
-    int compareTo(ListItem *);
     void handleEvent();
     void printEvent();
 };

@@ -1,13 +1,15 @@
 #pragma once
+
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "PriorityQueue.h"
-#include "Queue.h"
-class Process;
 
-#include "Arrival.h"
+class Process;
+class Queue;
+class PriorityQueue;
+class Event;
+
 
 using namespace std;
 
@@ -22,10 +24,13 @@ private:
 	Queue *ioForProcess;
 	Queue *cpuForSim;
 	Queue *ioForSim;
+	
 	ifstream fileRead;
 	int newId;
 	int maxCpuBurst;
 	int currTime;
+	int sum1;
+	int sum2;
 
 public:
 	Simulation();

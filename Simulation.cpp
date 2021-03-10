@@ -1,5 +1,9 @@
 #include "Simulation.h"
 #include "Process.h"
+#include "Queue.h"
+#include "PriorityQueue.h"
+#include "Event.h"
+#include "Arrival.h"
 
 using namespace std;
 
@@ -11,6 +15,8 @@ Simulation::Simulation()
     processList = new Queue();
     newId = 1;
     currTime = 0;
+    sum1 = 0;
+    sum2 = 0;
 }
 
 void Simulation::runSimulation(char *fileName)
@@ -29,7 +35,7 @@ void Simulation::runSimulation(char *fileName)
     setArrival();
     while (!(eventList->isEmpty()))
     {
-        Event *currentEvent = dynamic_cast<Event *>(eventList->extractMax());
+        Event *currentEvent = dynamic_cast<Event *>(eventList->dequeue());
         this->setTime(currentEvent->getTime());
         currentEvent->printEvent();
         currentEvent->handleEvent();
@@ -61,12 +67,14 @@ void Simulation::setArrival()
             {
                 newProcess->addCPUBurst(bursts);
                 newProcess->incrementBurstTime(bursts);
+                sum1 += bursts;
             }
             else
             {
                 bursts = -bursts;
                 newProcess->addIOBurst(bursts);
                 newProcess->incrementBurstTime(bursts);
+                sum2 += bursts;
             }
         }
 
@@ -104,17 +112,18 @@ void Simulation::addToProcessList(Process *newProcess)
 
 void Simulation::summary()
 {
+    cout << " sum1 : " << sum1 << endl;
+    cout << " sum2 : " << sum2 << endl;
     cout << " Process "
          << " ArrivalTime "
          << " ExitTime "
          << " WaitTime " << endl;
     cout << "-------------------------------------------------------------" << endl;
-    while(!isProcessListEmpty())
+    while (!isProcessListEmpty())
     {
-	Process* theProcess = dynamic_cast<Process*> (processList->dequeue());
-	theProcess->print();
+        Process *theProcess = dynamic_cast<Process *>(processList->dequeue());
+        theProcess->print();
     }
-	
 }
 
 int Simulation::currentTime()

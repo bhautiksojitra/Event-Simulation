@@ -2,6 +2,7 @@
 #include "Process.h"
 #include "Queue.h"
 #include "Burst.h"
+#include "ParentQueue.h"
 
 #include <iostream>
 
@@ -81,6 +82,17 @@ int Process::getCpuBurst()
 
     return 0;
 }
+
+void Process::setCpuBurst(int newValue)
+{
+    Burst *topBurst = dynamic_cast<Burst *>(cpuQueue->getFront());
+
+    if (topBurst != nullptr)
+    {
+        return topBurst->setIntValue(newValue);
+    }
+}
+	
 
 int Process::getIOBurst()
 {

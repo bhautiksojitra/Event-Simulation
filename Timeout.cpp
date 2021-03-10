@@ -20,9 +20,9 @@ void Timeout::handleEvent()
 
     Process *newVersion = currSim->removeProcessFromCPU();
 
-    newVersion->removeCPUBurst();
+    newVersion->setCpuBurst(currBurst - maxTime);
 
-    newVersion->addCPUBurst(currBurst - maxTime);
+    //newVersion->addCPUBurst(currBurst - maxTime);
 
     currSim->addProcessToCPU(newVersion);
 
@@ -31,26 +31,6 @@ void Timeout::handleEvent()
         StartCpu *newEvent = new StartCpu(this->getTime(), currSim->getCPUFront(), currSim);
         currSim->addEvent(newEvent);
     }
-}
-
-int Timeout::compareTo(ListItem *other)
-{
-    Event *castEvent = dynamic_cast<Event *>(other);
-    int boolean = 1;
-
-    if (Arrival *temp = dynamic_cast<Arrival *>(castEvent))
-    {
-        if (this->getTime() >= castEvent->getTime())
-        {
-            boolean = 0;
-        }
-    }
-    else
-    {
-        boolean = Event::compareTo(other);
-    }
-
-    return boolean;
 }
 
 void Timeout::printEvent()
