@@ -1,36 +1,47 @@
-#pragma once
+/*--------------------------------------------------------------
+
+    File       : Simulation.h
+    Author     : Bhautik Sojitra
+    Student Id : 7900140
+    Course     : COMP 2150
+    Assignment : 2
+
+    Purpose    :  Interface for the simulation class
+
+
+-------------------------------------------------------------------*/
+
+#pragma once // prevents multiple includes of header file
+
+// useful for file reading
 
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <sstream>
 
+// forward referenceing as required
 class Process;
 class Queue;
 class PriorityQueue;
 class Event;
-
 
 using namespace std;
 
 class Simulation
 {
 private:
-	// you will need to add fields
-	// including: Queues for CPU and IO, and priority queues for Events
+	// Queues for CPU and IO, and priority queues for Events
 	PriorityQueue *eventList;
 	Queue *processList;
-	Queue *cpuForProcess;
-	Queue *ioForProcess;
 	Queue *cpuForSim;
 	Queue *ioForSim;
-	
-	ifstream fileRead;
+
+	ifstream fileRead; // for file reading
+
 	int newId;
 	int maxCpuBurst;
 	int currTime;
-	int sum1;
-	int sum2;
 
 public:
 	Simulation();
@@ -43,23 +54,29 @@ public:
 	// assignment.  Called by main.
 	void summary();
 
-	// you may need to add more methods
+	// to check if the queues are empty or not
 	bool isProcessListEmpty();
 	bool isCPUEmpty();
 	bool isIOEmpty();
 
+	// add elements in the respective queues
 	void addEvent(Event *);
 	void addToProcessList(Process *);
-	void setArrival();
-	int currentTime();
-	void setTime(int);
-	int getMaxTimeQ();
-	void incrementTime(int);
 	void addProcessToCPU(Process *);
 	void addProcessToIO(Process *);
+
+	// to getter methods
+	int getMaxTimeQ();
+	int currentTime();
+
+	//set arrival event
+	void setArrival();
+	void setTime(int);
+	void incrementTime(int);
+
+	//remove and retrieve elements from the queue
 	Process *removeProcessFromCPU();
 	Process *getCPUFront();
-
 	Process *removeProcessFromIO();
 	Process *getIOFront();
 

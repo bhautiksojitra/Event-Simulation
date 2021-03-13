@@ -3,7 +3,7 @@ all: Main Test clean
 CC=clang++
 CFLAGS=--std=c++11
 
-objects = ParentQueue.o Exit.o CompleteIO.o StartIO.o Timeout.o CompleteCpu.o ListItem.o Event.o  StartCpu.o Simulation.o Queue.o PriorityQueue.o Node.o Process.o  Arrival.o Burst.o  
+objects =  Arrival.o Burst.o CompleteCpu.o CompleteIO.o  Event.o Exit.o ListItem.o Node.o ParentQueue.o PriorityQueue.o Process.o  Queue.o StartIO.o  StartCpu.o Simulation.o  Timeout.o
 
 # this rule will build A2 as the executable from the object files
 Main: A2main.o $(objects)

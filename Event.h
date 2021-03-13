@@ -1,8 +1,21 @@
-#pragma once
+/*--------------------------------------------------------------
+
+    File       : Event.h
+    Author     : Bhautik Sojitra
+    Student Id : 7900140
+    Course     : COMP 2150
+    Assignment : 2
+
+    Purpose    :  SUPER CLASS OF EVENTS Interface
+
+-------------------------------------------------------------------*/
+#pragma once // Prevents multiple includes
+
 #include "ListItem.h"
 class Process;
 class Simulation;
 
+//Sub class of the ListItem
 class Event : public ListItem
 {
 private:
